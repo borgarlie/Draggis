@@ -1,0 +1,61 @@
+<html>
+<head>
+	<title>Draggis example</title>
+	<script type="text/javascript" src="draggis.js"></script>
+	<style>
+		.outer_div {
+			width: 500px;
+		}
+		.inner_div {
+			width: 100%; height: 50px; background-color: red; border: 2px solid black;
+		}
+	</style>
+</head>
+<body>
+	<h1>Draggis example</h1>
+	<div id="container1" class="outer_div">
+		<div draggable="true" class="droptarget inner_div" id="div1">
+			Div with nested elements
+			<div>nested div<button>with button</button></div>
+		</div>
+		<div draggable="true" class="droptarget inner_div" id="div2">2</div>
+		<div draggable="true" class="droptarget inner_div" id="div3">3</div>
+		<div draggable="true" class="droptarget inner_div" id="div4">4</div>
+		<div draggable="true" class="droptarget inner_div" id="div5">5</div>
+	</div>
+	<br>
+	<div id="container2" class="outer_div">
+		<div draggable="true" class="droptarget inner_div" id="div6">1</div>
+		<div draggable="true" class="droptarget inner_div" id="div7">2</div>
+		<div draggable="true" class="droptarget inner_div" id="div8">3</div>
+		<div draggable="true" class="droptarget inner_div" id="div9">4</div>
+		<div draggable="true" class="droptarget inner_div" id="div10">5</div>
+	</div>
+</body>
+</html>
+<script>
+function load() {
+	var container1 = document.getElementById("container1");
+    var drag = new Draggis(container1, (dragged_id, dropped_id) => {
+    	console.log("Dragged id: " + dragged_id);
+    	console.log("Dragged to: " + dropped_id);
+    	var dragged = document.getElementById(dragged_id);
+    	var dropped_on = document.getElementById(dropped_id);
+    	container1.removeChild(dragged);
+		insertAfter(dragged, dropped_on);
+    });
+    var container2 = document.getElementById("container2");
+    var drag2 = new Draggis(container2, (dragged_id, dropped_id) => {
+    	console.log("Dragged id: " + dragged_id);
+    	console.log("Dragged to: " + dropped_id);
+    	var dragged = document.getElementById(dragged_id);
+    	var dropped_on = document.getElementById(dropped_id);
+    	container2.removeChild(dragged);
+		insertAfter(dragged, dropped_on);
+    });
+}
+function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+window.onload = load;
+</script>
